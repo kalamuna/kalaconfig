@@ -1,0 +1,20 @@
+name: Kalamuna Configuration
+type: module
+description: Provides a base set of configuration and module dependencies for starting new Drupal projects.
+core: 8.x
+package: Kalamuna
+dependencies:
+  - admin_toolbar_tools
+  - browsersync
+  - cache_control_override
+  - coder
+  - config_split
+  - config_sync
+  - config_tools
+  - devel
+  - kint
+  - pathauto
+  - redirect
+  - search_kint
+  - stage_file_proxy
+  - twig_xdebug
