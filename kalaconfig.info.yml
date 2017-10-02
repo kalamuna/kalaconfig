@@ -7,7 +7,6 @@ dependencies:
   - admin_toolbar_tools
   - browsersync
   - cache_control_override
-  - coder
   - config_split
   - config_sync
   - config_tools
