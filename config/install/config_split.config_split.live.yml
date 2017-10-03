@@ -1,12 +1,13 @@
 langcode: en
 status: true
 dependencies: {  }
-_core: {  }
-id: test
-label: 'Test environment'
-folder: ../config/test
+id: live
+label: 'Live environment'
+folder: live
 module:
-  stage_file_proxy: 0
+  config_files: 0
+  config_tools: 0
+  git_config: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }

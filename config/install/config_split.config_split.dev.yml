@@ -1,13 +1,20 @@
 langcode: en
 status: true
 dependencies: {  }
+_core: {  }
 id: dev
-label: Development environments
+label: Development
 folder: ../config/dev
 module:
+  browsersync: 0
+  config_provider: 0
+  config_sync: 0
+  config_update: 0
   devel: 0
   devel_generate: 0
+  kalaconfig: 0
   kint: 0
+  search_kint: 0
   stage_file_proxy: 0
   twig_xdebug: 0
   views_ui: 0
