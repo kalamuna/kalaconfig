@@ -10,6 +10,7 @@ module:
   config_provider: 0
   config_sync: 0
   config_update: 0
+  config_update_ui: 0
   devel: 0
   devel_generate: 0
   kalaconfig: 0

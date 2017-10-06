@@ -3,11 +3,14 @@ status: true
 dependencies: {  }
 id: live
 label: 'Live environment'
-folder: live
+folder: ../config/live
 module:
+  cache_control_override: 0
   config_files: 0
   config_tools: 0
+  dynamic_page_cache: 0
   git_config: 0
+  page_cache: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }

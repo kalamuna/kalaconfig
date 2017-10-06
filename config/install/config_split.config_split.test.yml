@@ -6,6 +6,9 @@ id: test
 label: 'Test environment'
 folder: ../config/test
 module:
+  cache_control_override: 0
+  dynamic_page_cache: 0
+  page_cache: 0
   stage_file_proxy: 0
 theme: {  }
 blacklist: {  }
