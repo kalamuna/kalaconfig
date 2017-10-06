@@ -5,27 +5,50 @@
     "keywords": ["Drupal"],
     "license": "GPL-2.0+",
     "homepage": "https://github.com/kalamuna/kalaconfig",
-    "minimum-stability": "dev",
     "support": {
         "issues": "https://github.com/kalamuna/kalaconfig/issues",
         "source": "https://github.com/kalamuna/kalaconfig.git"
     },
+    "authors": [{
+        "name": "Derek \"Hawkeye Tenderwolf\" DeRaps",
+        "homepage": "https://www.drupal.org/user/1571646",
+        "role": "Maintainer"
+    }],
+    "repositories": {
+        "chosen": {
+            "type": "package",
+            "package": {
+                "name": "harvesthq/chosen",
+                "version": "1.8.2",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.2/chosen_v1.8.2.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "composer/installers": "~1.2.0"
+                }
+            }
+        }
+    },
     "require": {
-        "drupal/admin_toolbar": "^1.18",
-        "drupal/browsersync": "^1.0",
-        "drupal/cache_control_override": "^1.0",
-        "drupal/coder": "^8.2",
-        "drupal/config_provider": "^1.0",
-        "drupal/config_split": "^1.1",
-        "drupal/config_sync": "^1.0",
-        "drupal/config_update": "^1.3",
+        "drupal/admin_toolbar": "~1.0",
+        "drupal/browsersync": "~1.0",
+        "drupal/cache_control_override": "~1.0",
+        "drupal/coder": "~8.2.0",
+        "drupal/config_provider": "~1.0",
+        "drupal/config_split": "~1.0",
+        "drupal/config_sync": "~1.0",
+        "drupal/config_update": "~1.0",
         "drupal/core": "~8.0",
-        "drupal/devel": "^1.0",
-        "drupal/pathauto": "^1.0",
-        "drupal/redirect": "^1.0",
-        "drupal/search_kint": "^1.0",
-        "drupal/stage_file_proxy": "^1.0",
-        "drupal/config_tools": "^1.0",
-        "drupal/twig_xdebug": "^1.0"
+        "drupal/devel": "~1.0",
+        "drupal/pathauto": "~1.0",
+        "drupal/redirect": "~1.0",
+        "drupal/search_kint": "~1.0",
+        "drupal/stage_file_proxy": "~1.0",
+        "drupal/config_tools": "~1.0",
+        "drupal/twig_xdebug": "~1.0",
+        "drupal/chosen": "~2.0",
+        "harvesthq/chosen": "~1.0"
     }
 }
