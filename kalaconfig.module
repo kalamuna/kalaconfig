@@ -16,7 +16,7 @@ function kalaconfig_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.kalaconfig':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Provides a base set of configuration and module dependencies for starting new Drupal projects.') . '</p>';
+      $output .= '<p>' . t('Provides a base set of configuration and module dependencies for starting new Drupal projects. After installing this module once, you may uninstall it but do not remove it, as composer dependencies are still needed.') . '</p>';
       return $output;
 
     default:
