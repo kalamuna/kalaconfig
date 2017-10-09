@@ -11,9 +11,9 @@ module:
   config_sync: 0
   config_update: 0
   config_update_ui: 0
+  dblog: 0
   devel: 0
   devel_generate: 0
-  kalaconfig: 0
   kint: 0
   search_kint: 0
   stage_file_proxy: 0
