@@ -6,13 +6,11 @@ package: Kalamuna
 dependencies:
   - admin_toolbar_tools
   - browsersync
-  - cache_control_override
   - config_split
   - config_sync
   - config_update_ui
   - devel
   - devel_generate
-  - git_config
   - kint
   - pathauto
   - redirect
