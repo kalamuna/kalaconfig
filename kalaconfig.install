@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ * (Un)Installation and update hooks for the kalaconfig project.
+ */
+
+/**
+ * Uninstalls undesired modules from the standard install profile.
+ */
+function kalaconfig_install() {
+  $modules = [
+    'color',
+    'comment',
+    'contact',
+    'history',
+    'shortcut',
+    'tour',
+  ];
+  foreach ($modules as $module) {
+    \Drupal::service('module_installer')->uninstall([$module]);
+  }
+}
