@@ -33,6 +33,16 @@ function kalaconfig_install() {
     'tour',
   ]);
 
+  $devel = \Drupal::configFactory()->getEditable('devel.settings');
+  $devel->set('raw_names', TRUE);
+  $devel->set('error_handlers', [1 => 1, 2 => 2]);
+  $devel->set('devel_dumper', 'kint');
+  $devel->save();
+
+  $config_tools = \Drupal::configFactory()->getEditable('config_files.config');
+  $config_tools->set('directory', '../config/tracked');
+  $config_tools->save();
+
   // Export the initial split configuration.
   $storage = \Drupal::service('config.storage.sync');
   \Drupal::service('config_split.cli')->export($storage);
