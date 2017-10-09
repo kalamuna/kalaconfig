@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * (Un)Installation and update hooks for the kalaconfig project.
+ * Un/Installation and update hooks for the kalaconfig project.
  */
 
 /**
@@ -10,7 +11,7 @@
 function kalaconfig_install() {
 
   // Delete the "article" node type so the comment module can be uninstalled.
-  $article = \Drupal::service('entity.manager')->getStorage('node_type')->load('article');
+  $article = \Drupal::entityManager()->getStorage('node_type')->load('article');
   $article->delete();
 
   // Run cron to actually delete the fields from the Article node.
@@ -31,4 +32,8 @@ function kalaconfig_install() {
     'shortcut',
     'tour',
   ]);
+
+  // Export the initial split configuration.
+  $storage = \Drupal::service('config.storage.sync');
+  \Drupal::service('config_split.cli')->export($storage);
 }
