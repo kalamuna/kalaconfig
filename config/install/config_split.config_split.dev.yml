@@ -3,8 +3,8 @@ status: true
 dependencies: {  }
 _core: {  }
 id: dev
-label: Development
-folder: ../config/dev
+label: 'Development'
+folder: ../config/splits/dev
 module:
   browsersync: 0
   config_provider: 0

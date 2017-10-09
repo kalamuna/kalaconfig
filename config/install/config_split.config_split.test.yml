@@ -4,7 +4,7 @@ dependencies: {  }
 _core: {  }
 id: test
 label: 'Test environment'
-folder: ../config/test
+folder: ../config/splits/test
 module:
   cache_control_override: 0
   dynamic_page_cache: 0
