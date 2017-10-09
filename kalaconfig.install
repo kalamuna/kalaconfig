@@ -8,15 +8,27 @@
  * Uninstalls undesired modules from the standard install profile.
  */
 function kalaconfig_install() {
-  $modules = [
+
+  // Delete the "article" node type so the comment module can be uninstalled.
+  $article = \Drupal::service('entity.manager')->getStorage('node_type')->load('article');
+  $article->delete();
+
+  // Run cron to actually delete the fields from the Article node.
+  \Drupal::service('cron')->run();
+
+  // Delete all shortcut entities in preparation for module uninstall.
+  $storage = \Drupal::entityTypeManager()->getStorage('shortcut');
+  $ids = $storage->getQuery()->execute();
+  $shortcuts = $storage->loadMultiple($ids);
+  $storage->delete($shortcuts);
+
+  // Uninstall some undesired modules.
+  \Drupal::service('module_installer')->uninstall([
     'color',
     'comment',
     'contact',
     'history',
     'shortcut',
     'tour',
-  ];
-  foreach ($modules as $module) {
-    \Drupal::service('module_installer')->uninstall([$module]);
-  }
+  ]);
 }
