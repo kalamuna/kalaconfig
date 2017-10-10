@@ -5,15 +5,6 @@ core: 8.x
 package: Kalamuna
 dependencies:
   - admin_toolbar_tools
-  - browsersync
   - config_split
-  - config_sync
-  - config_update_ui
-  - devel
-  - devel_generate
-  - kint
   - pathauto
   - redirect
-  - search_kint
-  - stage_file_proxy
-  - twig_xdebug
