@@ -5,45 +5,79 @@
  * Un/Installation and update hooks for the kalaconfig project.
  */
 
+use Drupal\kalaconfig\KalaUtil;
+
 /**
- * Uninstalls undesired modules from the standard install profile.
+ * Uninstalls core modules that are undersirable or that will be managed per-environment via Config Split.
  */
 function kalaconfig_install() {
 
-  // Delete the "article" node type so the comment module can be uninstalled.
-  $article = \Drupal::entityManager()->getStorage('node_type')->load('article');
-  $article->delete();
+  // Delete the "article" node type so the Comment module can be uninstalled.
+  KalaUtil::deleteContentType('article');
 
-  // Run cron to actually delete the fields from the Article node.
-  \Drupal::service('cron')->run();
+  // Delete all shortcut entities to allow uninstalling the Shortcut module.
+  KalaUtil::deleteAllEntitiesOfType('shortcut');
 
-  // Delete all shortcut entities in preparation for module uninstall.
-  $storage = \Drupal::entityTypeManager()->getStorage('shortcut');
-  $ids = $storage->getQuery()->execute();
-  $shortcuts = $storage->loadMultiple($ids);
-  $storage->delete($shortcuts);
-
-  // Uninstall some undesired modules.
-  \Drupal::service('module_installer')->uninstall([
+  // Uninstall core modules that are undesirable or managed by Config Split.
+  $module_installer = \Drupal::service('module_installer');
+  $module_installer->uninstall([
     'color',
     'comment',
     'contact',
+    'dblog',
+    'dynamic_page_cache',
     'history',
+    'page_cache',
     'shortcut',
     'tour',
+    'views_ui',
   ]);
 
-  $devel = \Drupal::configFactory()->getEditable('devel.settings');
+  // Ensure the current configs are exported into code so we can run an import.
+  $config_split = \Drupal::service('config_split.cli');
+  // n.b. Setting the config.storage.sync service to a variable doesn't work for
+  // some reason; it causes the configs to not export as expected, so just load
+  // the service from the container every time it's needed.
+  $config_split->export(\Drupal::service('config.storage.sync'));
+  // Execute a config import to trigger Config Split to turn on the modules for
+  // this environment (devel, etc.).
+  $config_split->import(\Drupal::service('config.storage.sync'));
+
+  // Make some desired config changes for later export.
+  // Config change: Configure devel to improve debug output.
+  $config_factory = \Drupal::configFactory();
+  $devel = $config_factory->getEditable('devel.settings');
   $devel->set('raw_names', TRUE);
   $devel->set('error_handlers', [1 => 1, 2 => 2]);
   $devel->set('devel_dumper', 'kint');
   $devel->save();
 
-  $config_tools = \Drupal::configFactory()->getEditable('config_files.config');
+  // Config change: Set the folder to store configuration changes made in prod.
+  // @see https://www.drupal.org/project/config_tools
+  $config_tools = $config_factory->getEditable('config_files.config');
   $config_tools->set('directory', '../config/tracked');
   $config_tools->save();
 
-  // Export the initial split configuration.
-  $storage = \Drupal::service('config.storage.sync');
-  \Drupal::service('config_split.cli')->export($storage);
+  // Export the split configs now to capture the settings just changed.
+  KalaUtil::exportConfigSplits(['dev', 'test', 'live']);
+
+  // This module's work is done, so turn it off. Register the uninstallation as
+  // a shutdown function rather than invoking it immediately to allow this
+  // module installation to wrap up cleanly.
+  drupal_register_shutdown_function(function () use ($config_split) {
+
+    // Import configs again to remove settings that don't belong in this
+    // environment (e.g., config_tools).
+    // n.b. For some reason, this import must happen here in the shutdown
+    // function for it to work correctly and remove the unwanted configs.
+    $config_split->import(\Drupal::service('config.storage.sync'));
+
+    // n.b. Reusing the same instance of the module_installer service from
+    // earlier causes problems here, so don't use a variable and just load the
+    // service from the container again.
+    \Drupal::service('module_installer')->uninstall(['kalaconfig']);
+
+    // Export config again to capture the uninstallation of kalaconfig.
+    $config_split->export(\Drupal::service('config.storage.sync'));
+  });
 }
