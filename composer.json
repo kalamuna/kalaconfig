@@ -1,10 +1,11 @@
 {
     "name": "kalamuna/kalaconfig",
     "type": "drupal-module",
-    "description": "Provides a base set of configuration and module dependencies for starting new Drupal projects. After installing this module once, you may uninstall it but do not remove it, as composer dependencies are still needed.",
+    "description": "Provides a base set of configuration and module dependencies for starting new Drupal projects. After installing this module once, you may uninstall it but do not remove it as composer dependencies are still needed for the parent project, [kalamuna/drupal-project](https://github.com/kalamuna/drupal-project).",
     "keywords": ["Drupal"],
     "license": "GPL-2.0+",
     "homepage": "https://github.com/kalamuna/kalaconfig",
+    "minimum-stability": "dev",
     "support": {
         "issues": "https://github.com/kalamuna/kalaconfig/issues",
         "source": "https://github.com/kalamuna/kalaconfig.git"
@@ -29,16 +30,22 @@
                     "composer/installers": "~1.2.0"
                 }
             }
+        },
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
         }
     },
     "require": {
         "drupal/admin_toolbar": "~1.0",
         "drupal/browsersync": "~1.0",
         "drupal/cache_control_override": "~1.0",
+        "drupal/chosen": "~2.0",
         "drupal/coder": "~8.2.0",
         "drupal/config_provider": "~1.0",
         "drupal/config_split": "~1.0",
         "drupal/config_sync": "~1.0",
+        "drupal/config_tools": "~1.0",
         "drupal/config_update": "~1.0",
         "drupal/core": "~8.0",
         "drupal/devel": "~1.0",
@@ -46,9 +53,7 @@
         "drupal/redirect": "~1.0",
         "drupal/search_kint": "~1.0",
         "drupal/stage_file_proxy": "~1.0",
-        "drupal/config_tools": "~1.0",
         "drupal/twig_xdebug": "~1.0",
-        "drupal/chosen": "~2.0",
         "harvesthq/chosen": "~1.0"
     }
 }
