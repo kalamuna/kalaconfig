@@ -5,6 +5,7 @@ Right now, it just turns on a few modules and creates two [config split](https:/
 
 ## Usage
 1. Copy the "chosen" package definition from the "repositories" section of Kalaconfig's composer.json into your project's main composer.json, as Composer does not read repositories from project dependencies.
+1. Add a composer dev-dependency on `"harvesthq/chosen": "~1.0"` to your main project.
 1. Run `composer install` on your main project.
 1. Turn on your local development environment (e.g., `vagrant up` to use the built-in DrupalVM)
 1. Install Drupal with core "standard" installation profile.
