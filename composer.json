@@ -28,7 +28,7 @@
                     "type": "zip"
                 },
                 "require": {
-                    "composer/installers": "~1.2.0"
+                    "composer/installers": "^1.2.0"
                 }
             }
         },
@@ -38,23 +38,22 @@
         }
     },
     "require": {
-        "drupal/admin_toolbar": "~1.0",
-        "drupal/browsersync": "~1.0",
-        "drupal/cache_control_override": "~1.0",
-        "drupal/chosen": "~2.0",
-        "drupal/coder": "~8.2.0",
-        "drupal/config_provider": "~1.0",
-        "drupal/config_split": "~1.0",
-        "drupal/config_sync": "~1.0",
-        "drupal/config_tools": "~1.0",
-        "drupal/config_update": "~1.0",
-        "drupal/core": "~8.0",
-        "drupal/devel": "~1.0",
-        "drupal/pathauto": "~1.0",
-        "drupal/redirect": "~1.0",
-        "drupal/search_kint": "~1.0",
-        "drupal/stage_file_proxy": "~1.0",
-        "drupal/twig_xdebug": "~1.0",
-        "harvesthq/chosen": "~1.0"
+        "drupal/admin_toolbar": "^1.0",
+        "drupal/browsersync": "^1.0",
+        "drupal/cache_control_override": "^1.0",
+        "drupal/chosen": "^2.0",
+        "drupal/coder": "^8.2.0",
+        "drupal/config_provider": "^1.0",
+        "drupal/config_split": "^1.0",
+        "drupal/config_sync": "^1.0",
+        "drupal/config_tools": "^1.0",
+        "drupal/config_update": "^1.0",
+        "drupal/core": "^8.0",
+        "drupal/devel": "^1.0",
+        "drupal/pathauto": "^1.0",
+        "drupal/redirect": "^1.0",
+        "drupal/search_kint": "^1.0",
+        "drupal/stage_file_proxy": "^1.0",
+        "drupal/twig_xdebug": "^1.0"
     }
 }
