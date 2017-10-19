@@ -5,6 +5,7 @@
     "keywords": ["Drupal"],
     "license": "GPL-2.0+",
     "homepage": "https://github.com/kalamuna/kalaconfig",
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "support": {
         "issues": "https://github.com/kalamuna/kalaconfig/issues",
@@ -53,6 +54,7 @@
         "drupal/redirect": "~1.0",
         "drupal/search_kint": "~1.0",
         "drupal/stage_file_proxy": "~1.0",
-        "drupal/twig_xdebug": "~1.0"
+        "drupal/twig_xdebug": "~1.0",
+        "drmonty/chosen": "^1.6"
     }
 }
