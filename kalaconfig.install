@@ -54,7 +54,7 @@ function kalaconfig_install() {
   // Config change: Set the folder to store configuration changes made in prod.
   // @see https://www.drupal.org/project/config_tools
   $config_tools = $config_factory->getEditable('config_files.config');
-  $config_tools->set('directory', '../config/tracked');
+  $config_tools->set('directory', '../config/autocommit');
   $config_tools->save();
 
   // Export the split configs now to capture the settings just changed.
