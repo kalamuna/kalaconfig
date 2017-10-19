@@ -19,8 +19,7 @@ function kalaconfig_install() {
   KalaUtil::deleteAllEntitiesOfType('shortcut');
 
   // Uninstall core modules that are undesirable or managed by Config Split.
-  $module_installer = \Drupal::service('module_installer');
-  $module_installer->uninstall([
+  \Drupal::service('module_installer')->uninstall([
     'color',
     'comment',
     'contact',
