@@ -57,6 +57,15 @@ function kalaconfig_install() {
   $config_tools->set('directory', '../config/autocommit');
   $config_tools->save();
 
+  // Config change: Enable Chosen on admin pages.
+  $chosen = $config_factory->getEditable('chosen.settings');
+  $chosen->set('minimum_single', 10);
+  $chosen->set('minimum_multiple', 0);
+  $chosen->set('search_contains', TRUE);
+  $chosen->set('allow_single_deselect', TRUE);
+  $chosen->set('chosen_include', 0);
+  $chosen->save();
+
   // Export the split configs now to capture the settings just changed.
   KalaUtil::exportConfigSplits(['dev', 'test', 'live']);
 
