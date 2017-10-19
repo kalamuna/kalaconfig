@@ -53,7 +53,6 @@
         "drupal/redirect": "~1.0",
         "drupal/search_kint": "~1.0",
         "drupal/stage_file_proxy": "~1.0",
-        "drupal/twig_xdebug": "~1.0",
-        "harvesthq/chosen": "~1.0"
+        "drupal/twig_xdebug": "~1.0"
     }
 }
