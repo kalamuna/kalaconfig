@@ -13,4 +13,4 @@ Right now, it just turns on a few modules and creates two [config split](https:/
 1. Commit the newly-exported configuration files to your repository.
 
 ## Notes
-You may choose not to install dev dependencies in your production/testing/staging environments by using `composer install --no-dev` (recommended). However, that means the dependencies brought in by Kalaconfig will be missing in those environments. Therefore, you must remember to copy any dependencies provided by Kalaconfig that are needed in those environments into your main project's composer.json "require" section.
+You may choose not to install dev dependencies in your production/testing/staging environments (recommended) by using `composer install --no-dev`. However, that means the dependencies brought in by Kalaconfig will be missing in those environments. Therefore, you must remember to copy any dependencies provided by Kalaconfig that are needed in those environments into your main project's composer.json "require" section.
