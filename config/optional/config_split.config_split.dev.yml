@@ -7,7 +7,7 @@ label: 'Development'
 folder: ../config/splits/dev
 module:
   browsersync: 0
-  chosen: 0
+  chosen_lib: 0
   config_provider: 0
   config_sync: 0
   config_update: 0
