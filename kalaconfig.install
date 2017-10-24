@@ -32,6 +32,16 @@ function kalaconfig_install() {
     'views_ui',
   ]);
 
+  // Config change: Enable Chosen on admin pages.
+  $config_factory = \Drupal::configFactory();
+  $chosen = $config_factory->getEditable('chosen.settings');
+  $chosen->set('minimum_single', 10);
+  $chosen->set('minimum_multiple', 0);
+  $chosen->set('search_contains', TRUE);
+  $chosen->set('allow_single_deselect', TRUE);
+  $chosen->set('chosen_include', 0);
+  $chosen->save();
+
   // Ensure the current configs are exported into code so we can run an import.
   $config_split = \Drupal::service('config_split.cli');
   // n.b. Setting the config.storage.sync service to a variable doesn't work for
@@ -44,7 +54,6 @@ function kalaconfig_install() {
 
   // Make some desired config changes for later export.
   // Config change: Configure devel to improve debug output.
-  $config_factory = \Drupal::configFactory();
   $devel = $config_factory->getEditable('devel.settings');
   $devel->set('raw_names', TRUE);
   $devel->set('error_handlers', [1 => 1, 2 => 2]);
@@ -56,15 +65,6 @@ function kalaconfig_install() {
   $config_tools = $config_factory->getEditable('config_files.config');
   $config_tools->set('directory', '../config/autocommit');
   $config_tools->save();
-
-  // Config change: Enable Chosen on admin pages.
-  $chosen = $config_factory->getEditable('chosen.settings');
-  $chosen->set('minimum_single', 10);
-  $chosen->set('minimum_multiple', 0);
-  $chosen->set('search_contains', TRUE);
-  $chosen->set('allow_single_deselect', TRUE);
-  $chosen->set('chosen_include', 0);
-  $chosen->save();
 
   // Export the split configs now to capture the settings just changed.
   KalaUtil::exportConfigSplits(['dev', 'test', 'live']);
