@@ -38,6 +38,7 @@
         }
     },
     "require": {
+        "components/chosen": "^1.0",
         "drupal/admin_toolbar": "^1.0",
         "drupal/browsersync": "^1.0",
         "drupal/cache_control_override": "^1.0",
