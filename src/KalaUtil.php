@@ -41,45 +41,46 @@ class KalaUtil {
   public static function redirect($protocol = NULL, $host = NULL, $path = NULL, $status = NULL) {
 
     // Don't break drush.
-    if (PHP_SAPI !== 'cli') {
+    if (PHP_SAPI === 'cli') {
+      return;
+    }
 
-      // Prep the variables with defaults.
-      foreach (array_keys(get_defined_vars()) as $var) {
-        if (!empty($$var)) {
-          switch ($var) {
+    // Prep the variables with defaults.
+    foreach (array_keys(get_defined_vars()) as $var) {
+      if (!empty($$var)) {
+        switch ($var) {
 
-            case 'protocol':
-              $protocol = isset(static::$defaultProtocol)
-                ? static::$defaultProtocol
-                : (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
-                  ? $_SERVER['HTTP_X_FORWARDED_PROTO']
-                  : 'http');
-              break;
+          case 'protocol':
+            $protocol = isset(static::$defaultProtocol)
+              ? static::$defaultProtocol
+              : (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
+                ? $_SERVER['HTTP_X_FORWARDED_PROTO']
+                : 'http');
+            break;
 
-            case 'host':
-              $host = $_SERVER['HTTP_HOST'];
-              break;
+          case 'host':
+            $host = $_SERVER['HTTP_HOST'];
+            break;
 
-            case 'path':
-              $path = $_SERVER['REQUEST_URI'];
-              break;
+          case 'path':
+            $path = $_SERVER['REQUEST_URI'];
+            break;
 
-            case 'status':
-              $status = static::$defaultStatusCode;
-              break;
-          }
+          case 'status':
+            $status = static::$defaultStatusCode;
+            break;
         }
       }
-
-      // Name transaction "redirect" in New Relic for improved reporting.
-      if (extension_loaded('newrelic')) {
-        newrelic_name_transaction("redirect");
-      }
-
-      // Let Symfony issue the redirect.
-      $response = new RedirectResponse("$protocol://$host{$path}", $status);
-      $response->send();
     }
+
+    // Name transaction "redirect" in New Relic for improved reporting.
+    if (extension_loaded('newrelic')) {
+      newrelic_name_transaction("redirect");
+    }
+
+    // Let Symfony issue the redirect.
+    $response = new RedirectResponse("$protocol://$host{$path}", $status);
+    $response->send();
   }
 
   /**
@@ -137,7 +138,6 @@ class KalaUtil {
     if ($type = \Drupal::entityManager()->getStorage('node_type')->load($name)) {
       $type->delete();
     }
-
     // Run cron to purge field tables from the database.
     \Drupal::service('cron')->run();
   }
