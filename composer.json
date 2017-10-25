@@ -17,28 +17,13 @@
         "role": "Maintainer"
     }],
     "repositories": {
-        "chosen": {
-            "type": "package",
-            "package": {
-                "name": "harvesthq/chosen",
-                "version": "1.8.2",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.2/chosen_v1.8.2.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "^1.2.0"
-                }
-            }
-        },
         "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         }
     },
     "require": {
-        "components/chosen": "^1.0",
+        "components/chosen": "^1.8.2",
         "drupal/admin_toolbar": "^1.0",
         "drupal/browsersync": "^1.0",
         "drupal/cache_control_override": "^1.0",
@@ -56,6 +41,13 @@
         "drupal/search_kint": "^1.0",
         "drupal/stage_file_proxy": "^1.0",
         "drupal/twig_xdebug": "^1.0",
-        "kalamuna/autogrow_textarea": ">=1.0-rc2"
+        "kalamuna/autogrow_textarea": ">=1.0-rc2",
+        "oomphinc/composer-installers-extender": "^1.1"
+    },
+    "extra": {
+        "installer-types": ["component"],
+        "installer-paths": {
+            "web/libraries/{$name}": ["type:component"]
+        }
     }
 }
