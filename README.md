@@ -1,5 +1,5 @@
 # Kalamuna Configuration
-Kalaconfig provides some configuration and module dependencies for starting new Drupal projects, including three [config split](https://www.drupal.org/project/config_split) environments - dev, test, and live.
+Kalaconfig provides some configuration and module dependencies for starting new Drupal projects, including three [config split](https://www.drupal.org/project/config_split) environments—dev, test, and live.
 
 **Note:** This module automatically uninstalls itself immediately after installation. But do not remove it! Composer dependencies are still needed.
 
