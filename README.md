@@ -4,8 +4,21 @@ Kalaconfig provides some configuration and module dependencies for starting new 
 **Note:** This module automatically uninstalls itself immediately after installation. But do not remove it! Composer dependencies are still needed.
 
 ## Usage
-1. Copy the `"chosen"` package definition from the `"repositories"` section of Kalaconfig's `composer.json` into your project's root `composer.json`, as Composer does not read repositories info from dependencies.
-1. Add a composer dev-dependency on `"harvesthq/chosen": "^1.0"` to your main project.
+1. Merge the following snippet into your project's `composer.json` file so that `drupal-library` and `component` dependencies install to the correct location:
+
+    ```
+    "extra": {
+        "installer-types": ["component"],
+        "installer-paths": {
+            "web/libraries/{$name}": [
+              "type:component",
+              "type:drupal-library"
+            ]
+        }
+    }
+    ```
+    where `web/libraries/` is the path to your libraries directory relative to your _project_ root. Take care not to wipe out any of the existing `extra` and `installer-paths` settings that may already exist in your `composer.json`.
+1. Run `composer require kalamuna/kalaconfig` on your main project.
 1. Run `composer install` on your main project.
 1. Turn on your local development environment (e.g., `vagrant up` to use the built-in DrupalVM)
 1. Install Drupal with core "standard" installation profile.
@@ -15,4 +28,4 @@ Kalaconfig provides some configuration and module dependencies for starting new 
 1. Use the `config_installer` installation profile to create the sites in all other environments (`drush site-install config_installer`).
 
 ## Notes
-You may choose not to install dev dependencies in your production/testing/staging environments (recommended) by using `composer install --no-dev`. However, that means the dependencies brought in by Kalaconfig will be missing in those environments. Therefore, you must remember to copy any dependencies provided by Kalaconfig that are needed in those environments into your main project's composer.json "require" section.
+You may choose not to install dev dependencies in your production/testing/staging environments (recommended) by using `composer install --no-dev`. However, that means the dependencies brought in by Kalaconfig will be missing in those environments. Therefore, you must remember to copy any dependencies provided by Kalaconfig that are needed in those environments into your main project's composer.json `require` section.
