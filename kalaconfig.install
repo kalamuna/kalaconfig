@@ -20,6 +20,7 @@ function kalaconfig_install() {
 
   // Uninstall core modules that are undesirable or managed by Config Split.
   \Drupal::service('module_installer')->uninstall([
+    'block_content',
     'color',
     'comment',
     'contact',
