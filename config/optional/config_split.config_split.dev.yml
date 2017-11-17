@@ -6,7 +6,6 @@ id: dev
 label: 'Development'
 folder: ../config/splits/dev
 module:
-  coffee: 0
   config_provider: 0
   config_sync: 0
   config_update: 0
