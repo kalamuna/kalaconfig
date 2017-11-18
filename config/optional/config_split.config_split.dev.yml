@@ -6,6 +6,7 @@ id: dev
 label: 'Development'
 folder: ../config/splits/dev
 module:
+  config_direct_save: 0
   config_provider: 0
   config_sync: 0
   config_update: 0
