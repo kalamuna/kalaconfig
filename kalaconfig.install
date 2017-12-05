@@ -67,7 +67,7 @@ function kalaconfig_install() {
   $config_tools->save();
 
   // Export the split configs now to capture the settings just changed.
-  KalaUtil::exportConfigSplits(['dev', 'test', 'live']);
+  KalaUtil::exportConfigSplits(['local', 'dev', 'test', 'live']);
 
   // This module's work is done, so turn it off. Register the uninstallation as
   // a shutdown function rather than invoking it immediately to allow this
