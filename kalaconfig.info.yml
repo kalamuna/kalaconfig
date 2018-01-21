@@ -6,7 +6,6 @@ package: Kalamuna
 dependencies:
   - admin_toolbar_tools
   - autogrow_textarea
-  - big_pipe
   - chosen
   - config_split
   - pathauto
