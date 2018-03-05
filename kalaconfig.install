@@ -14,11 +14,41 @@ use Drupal\config_direct_save\Form\UpdateConfigurationForm;
  */
 function kalaconfig_install() {
 
+  /*
+   * Deletes a content type.
+   *
+   * @param string $name
+   *   Machine name of the content type to delete.
+   */
+  $deleteContentType = function ($name) {
+    if ($type = \Drupal::entityManager()->getStorage('node_type')->load($name)) {
+      $type->delete();
+    }
+    // Run cron to purge field tables from the database.
+    \Drupal::service('cron')->run();
+  };
+
+  /*
+   * Deletes all the entities of the given entity type.
+   *
+   * @param string $entity_type
+   *   The entity type machine name.
+   */
+  $deleteAllEntitiesOfType = function ($entity_type) {
+    if (\Drupal::entityTypeManager()->hasHandler($entity_type, 'storage')) {
+      $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+      if ($ids = $storage->getQuery()->execute()) {
+        $entities = $storage->loadMultiple($ids);
+        $storage->delete($entities);
+      }
+    }
+  };
+
   // Delete the "article" node type so the Comment module can be uninstalled.
-  KalaUtil::deleteContentType('article');
+  $deleteContentType('article');
 
   // Delete all shortcut entities to allow uninstalling the Shortcut module.
-  KalaUtil::deleteAllEntitiesOfType('shortcut');
+  $deleteAllEntitiesOfType('shortcut');
 
   // Uninstall core modules that are undesirable or managed by Config Split.
   \Drupal::service('module_installer')->uninstall([
@@ -51,8 +81,8 @@ function kalaconfig_install() {
   $config_split->import(\Drupal::service('config.storage.sync'));
 
   // Now that the split configuration has been imported, we can delete the "all"
-  // config split, which simply provides a vehicle for importing saved config.
-  Drupal::configFactory()->getEditable('config_split.config_split.all.yml')->delete();
+  // config split, which simply provided a vehicle for importing saved config.
+  Drupal::configFactory()->getEditable('config_split.config_split.all')->delete();
 
   // This module's work is done, so turn it off. Register the uninstallation as
   // a shutdown function rather than invoking it immediately to allow this

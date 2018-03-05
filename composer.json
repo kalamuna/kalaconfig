@@ -1,7 +1,7 @@
 {
     "name": "kalamuna/kalaconfig",
     "type": "drupal-module",
-    "description": "Provides a base set of configuration and module dependencies for starting new Drupal projects. After installing this module once, you may uninstall it but do not remove it as composer dependencies are still needed for the parent project, [kalamuna/drupal-project](https://github.com/kalamuna/drupal-project).",
+    "description": "Provides a base set of configuration and module dependencies for starting new Drupal projects.",
     "keywords": ["Drupal"],
     "license": "GPL-2.0+",
     "homepage": "https://github.com/kalamuna/kalaconfig",
