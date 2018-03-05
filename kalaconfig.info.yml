@@ -11,7 +11,7 @@ dependencies:
   - components
   - config_direct_save
   - config_split
-  - kalastatic
+  # - kalastatic
   - linkit
   - pathauto
   - redirect
