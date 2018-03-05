@@ -16,6 +16,9 @@
         "homepage": "https://www.drupal.org/user/1571646",
         "role": "Maintainer"
     }],
+    "config": {
+      "sort-packages": true
+    },
     "repositories": {
         "drupal": {
             "type": "composer",
@@ -23,27 +26,19 @@
         }
     },
     "require": {
-        "components/chosen": "^1.8.2",
-        "drupal/admin_toolbar": "^1.0",
-        "drupal/browsersync": "^1.0",
-        "drupal/cache_control_override": "^1.0",
-        "drupal/chosen": "^2.0",
-        "drupal/coder": "^8.2.0",
-        "drupal/coffee": "^1.0",
-        "drupal/config_direct_save": "^1.0",
-        "drupal/config_provider": "^1.0",
-        "drupal/config_split": "^1.0",
-        "drupal/config_sync": "^1.0",
-        "drupal/config_tools": "^1.0",
-        "drupal/config_update": "^1.0",
+        "components/chosen": "*",
+        "drupal/admin_toolbar": "*",
+        "drupal/chosen": "*",
+        "drupal/components": "*",
+        "drupal/config_direct_save": "*",
+        "drupal/config_filter": "*",
+        "drupal/config_split": "*",
         "drupal/core": "^8.0",
-        "drupal/devel": "^1.0",
-        "drupal/pathauto": "^1.0",
-        "drupal/redirect": "^1.0",
-        "drupal/search_kint": "^1.0",
-        "drupal/stage_file_proxy": "^1.0",
-        "drupal/twig_xdebug": "^1.0",
-        "kalamuna/autogrow_textarea": ">=1.0-rc2",
-        "oomphinc/composer-installers-extender": "^1.1"
+        "drupal/linkit": "*",
+        "drupal/pathauto": "*",
+        "drupal/redirect": "*",
+        "drupal/twig_tweak": "*",
+        "kalamuna/autogrow_textarea": "*",
+        "kalamuna/kalastatic": "*"
     }
 }
