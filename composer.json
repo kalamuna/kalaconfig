@@ -30,7 +30,6 @@
         "drupal/admin_toolbar": "*",
         "drupal/chosen": "*",
         "drupal/components": "*",
-        "drupal/config_direct_save": "*",
         "drupal/config_filter": "*",
         "drupal/config_split": "*",
         "drupal/core": "^8.0",

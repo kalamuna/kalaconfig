@@ -5,50 +5,30 @@
  * Un/Installation and update hooks for the kalaconfig project.
  */
 
-use Drupal\kalaconfig\KalaUtil;
-use Drupal\Core\Form\FormState;
-use Drupal\config_direct_save\Form\UpdateConfigurationForm;
+use Drupal\Core\Config\FileStorageFactory;
+use Drupal\config_filter\Config\FilteredStorage;
+use Drupal\config_split\Config\GhostStorage;
 
 /**
  * Installation tasks for the Kalaconfig module.
  */
 function kalaconfig_install() {
 
-  /*
-   * Deletes a content type.
-   *
-   * @param string $name
-   *   Machine name of the content type to delete.
-   */
-  $deleteContentType = function ($name) {
-    if ($type = \Drupal::entityManager()->getStorage('node_type')->load($name)) {
-      $type->delete();
-    }
+  // Delete the "article" node type so the Comment module can be uninstalled.
+  if ($type = \Drupal::entityManager()->getStorage('node_type')->load($name)) {
+    $type->delete();
     // Run cron to purge field tables from the database.
     \Drupal::service('cron')->run();
-  };
-
-  /*
-   * Deletes all the entities of the given entity type.
-   *
-   * @param string $entity_type
-   *   The entity type machine name.
-   */
-  $deleteAllEntitiesOfType = function ($entity_type) {
-    if (\Drupal::entityTypeManager()->hasHandler($entity_type, 'storage')) {
-      $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-      if ($ids = $storage->getQuery()->execute()) {
-        $entities = $storage->loadMultiple($ids);
-        $storage->delete($entities);
-      }
-    }
-  };
-
-  // Delete the "article" node type so the Comment module can be uninstalled.
-  $deleteContentType('article');
+  }
 
   // Delete all shortcut entities to allow uninstalling the Shortcut module.
-  $deleteAllEntitiesOfType('shortcut');
+  if (\Drupal::entityTypeManager()->hasHandler('shortcut', 'storage')) {
+    $storage = \Drupal::entityTypeManager()->getStorage('shortcut');
+    if ($ids = $storage->getQuery()->execute()) {
+      $entities = $storage->loadMultiple($ids);
+      $storage->delete($entities);
+    }
+  }
 
   // Uninstall core modules that are undesirable or managed by Config Split.
   \Drupal::service('module_installer')->uninstall([
@@ -64,30 +44,74 @@ function kalaconfig_install() {
     'views_ui',
   ]);
 
-  // Export the site's config by mocking the Config Direct Save module's form.
-  // Don't use the Config Split CLI service to execute the config export as it
-  // will delete any files in the confg split directories not yet imported
-  // (i.e., the ones committed to the code repository we want to import next).
-  $form = [];
-  $form_state = new FormState();
-  $form_state->setValue('config_directory', '../config/sync');
-  $config_direct_save = new UpdateConfigurationForm(
-    \Drupal::service('config.storage'), \Drupal::service('config.manager'));
-  $config_direct_save->createConfigFiles($form, $form_state);
+  // Config change: Enable the HarvestHQ "Chosen" UI module on admin pages only.
+  \Drupal::configFactory()->getEditable('chosen.settings')->merge([
+    'minimum_single'        => 10,
+    'minimum_multiple'      => 0,
+    'search_contains'       => TRUE,
+    'allow_single_deselect' => TRUE,
+    'chosen_include'        => 0,
+  ])->save();
+
+  // Export the initial set of this site's configuration files.
+  // n.b. Reusing the same instance of the config.storage.sync service causes
+  // the configs to not export as expected, so don't assign it to a variable and
+  // just load the service from the container every time it's needed.
+  $config_split = \Drupal::service('config_split.cli');
+  $config_split->export(\Drupal::service('config.storage.sync'));
 
   // Execute a config import to trigger Config Split to turn on the modules and
   // configuration for this environment (devel for the dev environment, etc.).
-  $config_split = \Drupal::service('config_split.cli');
   $config_split->import(\Drupal::service('config.storage.sync'));
 
-  // Now that the split configuration has been imported, we can delete the "all"
-  // config split, which simply provided a vehicle for importing saved config.
-  Drupal::configFactory()->getEditable('config_split.config_split.all')->delete();
+  // Make some environment-specific config changes for subsequent export.
+  // Config change: Configure devel to improve debug output.
+  \Drupal::configFactory()->getEditable('devel.settings')->merge([
+    'raw_names'      => TRUE,
+    'error_handlers' => [1 => 1, 2 => 2],
+    'devel_dumper'   => 'kint',
+  ])->save();
+
+  // Config change: Add some useful items to the devel toolbar.
+  \Drupal::configFactory()
+    ->getEditable('devel.toolbar.settings')
+    ->set('toolbar_items', [
+      'devel.container_info.service',
+      'devel.route_info.item',
+    ])->save();
+
+  // Config change: Set the folder to store configuration changes made in prod.
+  // @see https://www.drupal.org/project/config_tools
+  \Drupal::configFactory()
+    ->getEditable('config_files.config')
+    ->set('directory', '../config/autocommit')
+    ->save();
+
+  // Individually export each config split now to capture the settings just
+  // changed. Regular exports only capture split configs that apply in the
+  // current environment (dev, in this case).
+  // Code adapted from \Drupal\config_split\ConfigSplitCliService::ioExport().
+  $config_filter = \Drupal::service('plugin.manager.config_filter');
+  $storage_factory = \Drupal::service('config_filter.storage_factory');
+  $sync = FileStorageFactory::getSync();
+  foreach (['local', 'dev', 'test', 'live'] as $split) {
+    $plugin_id = "config_split:$split";
+    $filter = $config_filter->getFilterInstance($plugin_id);
+    $storage = $storage_factory->getFilteredStorage($sync, ['config.storage.sync'], [$plugin_id]);
+    $split = new FilteredStorage(new GhostStorage($storage), [$filter]);
+    $config_split->export($split);
+  }
 
   // This module's work is done, so turn it off. Register the uninstallation as
   // a shutdown function rather than invoking it immediately to allow this
   // module installation to wrap up cleanly.
   drupal_register_shutdown_function(function () use ($config_split) {
+
+    // Import configs again to remove settings that don't belong in this
+    // environment (e.g., no "config_tools" in the dev environment).
+    // n.b. For some reason, this import must happen here in the shutdown
+    // function for it to work correctly and remove the unwanted configs.
+    $config_split->import(\Drupal::service('config.storage.sync'));
 
     // Uninstall the kalaconfig module as it is no longer needed.
     // n.b. Reusing the same instance of the module_installer service from
@@ -96,9 +120,6 @@ function kalaconfig_install() {
     \Drupal::service('module_installer')->uninstall(['kalaconfig']);
 
     // Export config again to capture the uninstallation of kalaconfig.
-    // n.b. Reusing the same instance of the config.storage.sync service from
-    // earlier causes the configs to not export as expected, so just load the
-    // service from the container every time it's needed.
     $config_split->export(\Drupal::service('config.storage.sync'));
   });
 }

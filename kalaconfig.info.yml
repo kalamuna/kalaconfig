@@ -9,7 +9,6 @@ dependencies:
   - big_pipe
   - chosen
   - components
-  - config_direct_save
   - config_split
   # - kalastatic
   - linkit
