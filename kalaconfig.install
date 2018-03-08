@@ -72,9 +72,9 @@ function kalaconfig_install() {
     ->set('directory', '../config/autocommit')
     ->save();
 
-  // This module's work is done, so turn it off. Register the uninstallation as
-  // a shutdown function rather than invoking it immediately to allow this
-  // module installation to wrap up cleanly.
+  // Once this install hook completes, the module's work is done, so turn it
+  // off. Register the uninstallation as a shutdown function rather than
+  // invoking it immediately to allow the module installation to wrapup cleanly.
   drupal_register_shutdown_function(function () {
 
     // Get access to the configuration override array.
@@ -88,6 +88,8 @@ function kalaconfig_install() {
     ]);
 
     // Turn on all the splits temporarily to capture an initial set of configs.
+    // Note that for the export to correctly remove a split's "complete split /
+    // blacklist" modules from core.extension.yml, the split must be enabled.
     foreach (['local', 'dev', 'test', 'live'] as $split) {
       $key = "config_split.config_split.$split";
       $split_status[$split] = $config[$key]['status'];
