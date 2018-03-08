@@ -7,11 +7,25 @@ dependencies:
   - admin_toolbar_tools
   - autogrow_textarea
   - big_pipe
+  - browsersync
+  - cache_control_override
   - chosen
+  - coffee
   - components
+  - config_direct_save
+  - config_provider
   - config_split
+  - config_sync
+  - config_update_ui
+  - devel
+  - devel_generate
+  - git_config
   # - kalastatic
+  - kint
   - linkit
   - pathauto
   - redirect
+  - search_kint
+  - stage_file_proxy
   - twig_tweak
+  - twig_xdebug
