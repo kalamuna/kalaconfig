@@ -26,18 +26,18 @@
         }
     },
     "require": {
-        "components/chosen": ">=1.8.2",
-        "drupal/admin_toolbar": ">=1.18",
-        "drupal/chosen": ">=2.0",
-        "drupal/components": ">=1.0",
+        "components/chosen": "*",
+        "drupal/admin_toolbar": "*",
+        "drupal/chosen": "*",
+        "drupal/components": "*",
         "drupal/config_filter": "*",
-        "drupal/config_split": ">=1.1",
+        "drupal/config_split": "*",
         "drupal/core": "^8.0",
         "drupal/linkit": "*",
-        "drupal/pathauto": ">=1.0",
-        "drupal/redirect": ">=1.0",
-        "drupal/twig_tweak": ">=2.0",
-        "kalamuna/autogrow_textarea": ">=1.0",
-        "kalamuna/kalastatic": ">=8.2.0"
+        "drupal/pathauto": "*",
+        "drupal/redirect": "*",
+        "drupal/twig_tweak": "*",
+        "kalamuna/autogrow_textarea": "*",
+        "kalamuna/kalastatic": "*"
     }
 }
