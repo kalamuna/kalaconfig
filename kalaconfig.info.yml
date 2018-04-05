@@ -10,6 +10,7 @@ dependencies:
   - browsersync
   - cache_control_override
   - chosen
+  - clean_maintenance
   - coffee
   - components
   - config_direct_save

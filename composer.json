@@ -29,6 +29,7 @@
         "components/chosen": ">=1.8.2",
         "drupal/admin_toolbar": ">=1.18",
         "drupal/chosen": ">=2.0",
+        "drupal/clean_maintenance": ">=1.0",
         "drupal/components": ">=1.0",
         "drupal/config_filter": "*",
         "drupal/config_split": ">=1.1",
