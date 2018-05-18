@@ -5,6 +5,7 @@ id: live
 label: 'Live environment'
 folder: ../config/splits/live
 module:
+  big_pipe_sessionless: 0
   cache_control_override: 0
   config_files: 0
   config_tools: 0
