@@ -7,26 +7,37 @@ dependencies:
   - admin_toolbar_tools
   - autogrow_textarea
   - big_pipe
+  - block_field
   - browsersync
   - cache_control_override
   - chosen
   - clean_maintenance
   - coffee
   - components
+  - conditional_fields
   - config_direct_save
   - config_provider
   - config_split
   - config_sync
   - config_update_ui
+  - contribute
+  - cshs
   - devel
   - devel_generate
+  - easy_breadcrumb
+  - field_group
   - git_config
   # - kalastatic
   - kint
   - linkit
+  - menu_block
+  - menu_link_weight
+  - paragraphs
   - pathauto
+  - prepopulate
   - redirect
   - search_kint
+  - simple_sitemap
   - stage_file_proxy
   - twig_tweak
   - twig_xdebug
