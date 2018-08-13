@@ -72,6 +72,9 @@ function kalaconfig_install() {
     ->set('directory', '../config/autocommit')
     ->save();
 
+  // Set the default theme.
+  \Drupal::service('theme_handler')->setDefault('material_admin');
+
   // Once this install hook completes, the module's work is done, so turn it
   // off. Register the uninstallation as a shutdown function rather than
   // invoking it immediately to allow the module installation to wrapup cleanly.

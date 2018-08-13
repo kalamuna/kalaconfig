@@ -36,6 +36,7 @@
         "drupal/config_split": ">=1.1",
         "drupal/core": "^8.0",
         "drupal/linkit": ">=5.0",
+        "drupal/material_admin": ">=1.0",
         "drupal/pathauto": ">=1.0",
         "drupal/redirect": ">=1.0",
         "drupal/twig_tweak": ">=2.0",

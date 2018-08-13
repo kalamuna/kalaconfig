@@ -30,6 +30,7 @@ dependencies:
   # - kalastatic
   - kint
   - linkit
+  - material_admin
   - menu_block
   - menu_link_weight
   - paragraphs
